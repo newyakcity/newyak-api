@@ -36,6 +36,11 @@ class PostsController extends Controller
         return response()->json($newPost);
     }
 
+    function get(string $id)
+    {
+        return $this->post->with('comments')->find($id);
+    }
+
     function search(Request $request)
     {
         $lat = $request->get('lat');
