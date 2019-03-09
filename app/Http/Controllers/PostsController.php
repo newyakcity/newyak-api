@@ -38,7 +38,7 @@ class PostsController extends Controller
 
     function get(string $id)
     {
-        return $this->post->with('comments')->find($id);
+        return $this->post->with('comments')->withCount('comments')->find($id);
     }
 
     function search(Request $request)
