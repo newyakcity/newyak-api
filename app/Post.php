@@ -49,7 +49,6 @@ class Post extends Model
                 )
                 ) < 5"
             ), [$lat, $lng, $lat])
-            ->with('comments')
             ->get();
     }
 
