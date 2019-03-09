@@ -9,6 +9,8 @@ use Ramsey\Uuid\Uuid;
 
 class Post extends Model
 {
+    protected $casts = ['id' => 'string'];
+
     /**
      * The attributes that are mass assignable.
      *

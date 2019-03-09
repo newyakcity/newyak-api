@@ -4,8 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Ramsey\Uuid\Uuid;
+
 class Comment extends Model
 {
+    protected $casts = ['id' => 'string'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,5 +31,18 @@ class Comment extends Model
     public function post()
     {
         return $this->belongsTo('App\Post');
+    }
+
+    public function createComment(array $data) {
+        $newComment = $this->newInstance();
+
+        $newComment->fill($data);
+
+        $newComment['id'] = Uuid::uuid4()->toString();
+        $newComment['authorId'] = Uuid::uuid4()->toString();
+
+        $newComment->save();
+
+        return $newComment;
     }
 }

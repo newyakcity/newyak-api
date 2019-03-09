@@ -18,8 +18,8 @@ class AddPostTable extends Migration
             $table->string('authorId');
             $table->string('title');
             $table->text('body');
-            $table->decimal('latitude');
-            $table->decimal('longitude');
+            $table->decimal('latitude', 9, 7);
+            $table->decimal('longitude', 9, 7);
             $table->timestamps();
         });
     }
