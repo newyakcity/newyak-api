@@ -8,9 +8,9 @@ use App\Post;
 
 class PostsController extends Controller
 {
-    private $post;
+    public $post;
 
-    function constructor(Post $post)
+    function __construct(Post $post)
     {
         $this->post = $post;
     }
@@ -25,6 +25,6 @@ class PostsController extends Controller
             return response()->json(['error' => 'lat and lng parameters are required'], 400);
         }
 
-        return response()->json([]);
+        return response()->json($this->post->get());
     }
 }

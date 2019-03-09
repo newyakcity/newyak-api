@@ -14,7 +14,7 @@ class AddPostTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->string('id');
+            $table->string('id')->unique();
             $table->string('authorId');
             $table->string('title');
             $table->text('body');
