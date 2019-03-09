@@ -39,5 +39,32 @@ class DatabaseSeeder extends Seeder
             'latitude' => 40.024970,
             'longitude' => -75.220550
         ]);
+
+        DB::table('posts')->insert([
+            'id' => Str::random(10),
+            'authorId' => Str::random(10),
+            'title' => Str::random(10),
+            'body' => Str::random(100),
+            'latitude' => 37.785834,
+            'longitude' => -122.406417
+        ]);
+
+        DB::table('posts')->insert([
+            'id' => Str::random(10),
+            'authorId' => Str::random(10),
+            'title' => Str::random(10),
+            'body' => Str::random(100),
+            'latitude' => 37.785834,
+            'longitude' => -122.406417
+        ]);
+
+        DB::table('posts')->insert([
+            'id' => Str::random(10),
+            'authorId' => Str::random(10),
+            'title' => Str::random(10),
+            'body' => Str::random(100),
+            'latitude' => 37.785834,
+            'longitude' => -122.406417
+        ]);
     }
 }
