@@ -49,6 +49,7 @@ class Post extends Model
                 )
                 ) < 5"
             ), [$lat, $lng, $lat])
+            ->withCount('comments')
             ->get();
     }
 
