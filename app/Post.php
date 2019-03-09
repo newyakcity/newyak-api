@@ -27,7 +27,7 @@ class Post extends Model
 
     public function  comments()
     {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Comment', 'postId');
     }
 
     public function searchPosts(string  $lat, string $lng) {
@@ -45,6 +45,7 @@ class Post extends Model
                 )
                 ) < 5"
             ), [$lat, $lng, $lat])
+            ->with('comments')
             ->get();
     }
 }
