@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::get('/posts', 'PostsController@search');
 
 Route::get('/post/{id}', 'PostsController@get');
+Route::get('/post/{id}/comments', 'commentsController@getPostComments');
 Route::post('/post', 'PostsController@create');
 
 Route::post('/comment', 'CommentsController@create');

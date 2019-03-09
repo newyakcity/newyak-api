@@ -15,6 +15,13 @@ class CommentsController extends Controller
         $this->comment = $comment;
     }
 
+    function getPostComments(string $postId)
+    {
+        $comments = $this->comment->where('postId', '=', $postId)->get();
+
+        return response()->json($comments);
+    }
+
     function create(Request $request)
     {
         $data = $request->json()->all();
