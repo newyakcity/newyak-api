@@ -14,3 +14,5 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/posts', 'PostsController@search');
+
+Route::post('/post', 'PostsController@create');

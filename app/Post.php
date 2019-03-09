@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
+use Ramsey\Uuid\Uuid;
+
 class Post extends Model
 {
     /**
@@ -47,5 +49,18 @@ class Post extends Model
             ), [$lat, $lng, $lat])
             ->with('comments')
             ->get();
+    }
+
+    public function createPost(array $data) {
+        $newPost = $this->newInstance();
+
+        $newPost->fill($data);
+
+        $newPost['id'] = Uuid::uuid4()->toString();
+        $newPost['authorId'] = Uuid::uuid4()->toString();
+
+        $newPost->save();
+
+        return $newPost;
     }
 }
