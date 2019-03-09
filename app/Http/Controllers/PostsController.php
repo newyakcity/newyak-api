@@ -25,6 +25,6 @@ class PostsController extends Controller
             return response()->json(['error' => 'lat and lng parameters are required'], 400);
         }
 
-        return response()->json($this->post->get());
+        return response()->json($this->post->searchPosts($lat, $lng));
     }
 }

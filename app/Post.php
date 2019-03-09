@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Post extends Model
 {
@@ -27,5 +28,23 @@ class Post extends Model
     public function  comments()
     {
         return $this->hasMany('App\Comment');
+    }
+
+    public function searchPosts(string  $lat, string $lng) {
+        return $this->whereRaw(
+            DB::raw("(
+                3959 *
+                acos(
+                    cos( radians( ? ) ) *
+                    cos( radians( `latitude` ) ) *
+                    cos(
+                        radians( `longitude` ) - radians( ? )
+                    ) +
+                    sin(radians(?)) *
+                    sin(radians(`latitude`))
+                )
+                ) < 5"
+            ), [$lat, $lng, $lat])
+            ->get();
     }
 }
