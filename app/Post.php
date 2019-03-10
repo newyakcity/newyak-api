@@ -50,6 +50,7 @@ class Post extends Model
                 ) < 5"
             ), [$lat, $lng, $lat])
             ->withCount('comments')
+            ->orderBy('created_at', 'desc')
             ->get();
     }
 

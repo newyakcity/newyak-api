@@ -33,6 +33,8 @@ class PostsController extends Controller
 
         $newPost = $this->post->createPost($data);
 
+        $newPost['comments_count'] = 0;
+
         return response()->json($newPost);
     }
 
