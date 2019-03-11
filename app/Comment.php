@@ -8,6 +8,8 @@ use Ramsey\Uuid\Uuid;
 
 class Comment extends Model
 {
+    public $incrementing = false;
+
     protected $casts = ['id' => 'string'];
 
     /**
@@ -28,14 +30,21 @@ class Comment extends Model
 
     ];
 
-    public function getAuthorIdAttribute($value)
-    {
-        return substr($value, 0, 10);
-    }
+    /*
+        public function getAuthorIdAttribute($value)
+        {
+            return substr($value, 0, 10);
+        }
+    */
 
     public function post()
     {
         return $this->belongsTo('App\Post');
+    }
+
+    public function username()
+    {
+        return $this->morphOne(Username::class, 'usernameable');
     }
 
     public function createComment(array $data) {

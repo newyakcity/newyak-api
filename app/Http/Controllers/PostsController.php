@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\UsernameService;
+use App\Username;
 use Illuminate\Http\Request;
 
 use App\Post;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PostsController extends Controller
 {
     public $post;
+    public $username;
+    public $usernameService;
 
-    function __construct(Post $post)
+    function __construct(Post $post, Username $username, UsernameService $usernameService)
     {
         $this->post = $post;
+        $this->username = $username;
+        $this->usernameService = $usernameService;
     }
 
     function create(Request $request)
@@ -33,14 +41,30 @@ class PostsController extends Controller
 
         $newPost = $this->post->createPost($data);
 
-        $newPost['comments_count'] = 0;
+        $username = $this->username->newInstance();
+
+        $username['username'] = $this->usernameService->generateUsername($newPost['author_id']);
+        $username['usernameable_id'] = $newPost['id'];
+        $username['usernameable_type'] = Post::class;
+
+        $username->save();
+
+        $newPost['username'] = $username['username'];
 
         return response()->json($newPost);
     }
 
     function get(string $id)
     {
-        return $this->post->with('comments')->withCount('comments')->find($id);
+        DB::enableQueryLog();
+
+        $res = $this->post->with(['comments.username', 'username'])
+            ->withCount('comments')
+            ->find($id);
+
+        Log::debug(DB::getQueryLog());
+
+        return response()->json($res);
     }
 
     function search(Request $request)
