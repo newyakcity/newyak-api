@@ -51,7 +51,7 @@ class CommentsController extends Controller
 
         $username->save();
 
-        $newPost['username'] = $username['username'];
+        $newPost['username'] = ['username' => $username['username']];
 
         return response()->json($newPost);
     }
