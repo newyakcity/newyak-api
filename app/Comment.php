@@ -8,6 +8,8 @@ use Ramsey\Uuid\Uuid;
 
 class Comment extends Model
 {
+    public $incrementing = false;
+
     protected $casts = ['id' => 'string'];
 
     /**
@@ -42,7 +44,7 @@ class Comment extends Model
 
     public function username()
     {
-        return $this->hasOne('App\Username', 'author_id', 'author_id');
+        return $this->morphOne(Username::class, 'usernameable');
     }
 
     public function createComment(array $data) {

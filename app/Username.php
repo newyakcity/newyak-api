@@ -6,13 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Username extends Model
 {
+    public $casts = ['usernameable_id' => 'string'];
+
+
+    public function usernameable()
+    {
+        return $this->morphTo();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'author_id', 'username'
+        'username', 'usernameable_id', 'usernameable_type'
     ];
 
     /**
@@ -21,7 +29,7 @@ class Username extends Model
      * @var array
      */
     protected $hidden = [
-        'id'
+        'id', 'usernameable_id', 'usernameable_type', 'created_at', 'updated_at'
     ];
 
     public function comment()

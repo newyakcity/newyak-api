@@ -4,11 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 use Ramsey\Uuid\Uuid;
 
 class Post extends Model
 {
+    public $incrementing = false;
+
     protected $casts = ['id' => 'string'];
 
     /**
@@ -43,11 +46,13 @@ class Post extends Model
 
     public function username()
     {
-        return $this->hasOne('App\Username', 'author_id', 'author_id');
+        return $this->morphOne(Username::class, 'usernameable');
     }
 
     public function searchPosts(string  $lat, string $lng) {
-        return $this->whereRaw(
+        DB::enableQueryLog();
+
+        $res = $this->whereRaw(
             DB::raw("(
                 3959 *
                 acos(
@@ -62,8 +67,16 @@ class Post extends Model
                 ) < 5"
             ), [$lat, $lng, $lat])
             ->withCount('comments')
+            ->with('username')
             ->orderBy('created_at', 'desc')
             ->get();
+
+        Log::debug(DB::getQueryLog());
+
+        Log::debug($res);
+        Log::debug('Username: ' . $res[0]->username);
+
+        return $res;
     }
 
     public function createPost(array $data) {

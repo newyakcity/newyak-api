@@ -13,10 +13,11 @@ class AddUsernameTable extends Migration
      */
     public function up()
     {
-        Schema::create('username', function (Blueprint $table) {
+        Schema::create('usernames', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->string('author_id');
             $table->string('username');
+            $table->string('usernameable_id');
+            $table->string('usernameable_type');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class AddUsernameTable extends Migration
      */
     public function down()
     {
-        Schema::drop('username');
+        Schema::drop('usernames');
     }
 }
