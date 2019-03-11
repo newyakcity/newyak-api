@@ -40,6 +40,11 @@ class Comment extends Model
         return $this->belongsTo('App\Post');
     }
 
+    public function username()
+    {
+        return $this->hasOne('App\Username', 'author_id', 'author_id');
+    }
+
     public function createComment(array $data) {
         $newComment = $this->newInstance();
 

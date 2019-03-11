@@ -29,14 +29,21 @@ class Post extends Model
 
     ];
 
-    public function getAuthorIdAttribute($value)
-    {
-        return substr($value, 0, 10);
-    }
+    /*
+        public function getAuthorIdAttribute($value)
+        {
+            return substr($value, 0, 10);
+        }
+    */
 
     public function  comments()
     {
         return $this->hasMany('App\Comment', 'postId');
+    }
+
+    public function username()
+    {
+        return $this->hasOne('App\Username', 'author_id', 'author_id');
     }
 
     public function searchPosts(string  $lat, string $lng) {
