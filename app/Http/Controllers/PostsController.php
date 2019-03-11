@@ -56,13 +56,9 @@ class PostsController extends Controller
 
     function get(string $id)
     {
-        DB::enableQueryLog();
-
         $res = $this->post->with(['comments.username', 'username'])
             ->withCount('comments')
             ->find($id);
-
-        Log::debug(DB::getQueryLog());
 
         return response()->json($res);
     }

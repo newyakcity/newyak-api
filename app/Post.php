@@ -50,7 +50,6 @@ class Post extends Model
     }
 
     public function searchPosts(string  $lat, string $lng) {
-        DB::enableQueryLog();
 
         $res = $this->whereRaw(
             DB::raw("(
@@ -70,11 +69,6 @@ class Post extends Model
             ->with('username')
             ->orderBy('created_at', 'desc')
             ->get();
-
-        Log::debug(DB::getQueryLog());
-
-        Log::debug($res);
-        Log::debug('Username: ' . $res[0]->username);
 
         return $res;
     }
