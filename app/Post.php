@@ -17,7 +17,7 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'authorId', 'title', 'body', 'latitude', 'longitude'
+        'id', 'author_id', 'title', 'body', 'latitude', 'longitude'
     ];
 
     /**
@@ -28,6 +28,11 @@ class Post extends Model
     protected $hidden = [
 
     ];
+
+    public function getAuthorIdAttribute($value)
+    {
+        return substr($value, 0, 10);
+    }
 
     public function  comments()
     {
@@ -60,7 +65,7 @@ class Post extends Model
         $newPost->fill($data);
 
         $newPost['id'] = Uuid::uuid4()->toString();
-        $newPost['authorId'] = Uuid::uuid4()->toString();
+        $newPost['author_id'] = Uuid::uuid4()->toString();
 
         $newPost->save();
 

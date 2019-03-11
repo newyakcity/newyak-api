@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('posts')->insert([
             'id' => Str::random(10),
-            'authorId' => Str::random(10),
+            'author_id' => Str::random(10),
             'title' => Str::random(10),
             'body' => Str::random(100),
             'latitude' => 39.925620,
@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('posts')->insert([
             'id' => Str::random(10),
-            'authorId' => Str::random(10),
+            'author_id' => Str::random(10),
             'title' => Str::random(10),
             'body' => Str::random(100),
             'latitude' => 39.981720,
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('posts')->insert([
             'id' => Str::random(10),
-            'authorId' => Str::random(10),
+            'author_id' => Str::random(10),
             'title' => Str::random(10),
             'body' => Str::random(100),
             'latitude' => 40.024970,
@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('posts')->insert([
             'id' => Str::random(10),
-            'authorId' => Str::random(10),
+            'author_id' => Str::random(10),
             'title' => Str::random(10),
             'body' => Str::random(100),
             'latitude' => 37.785834,
@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('posts')->insert([
             'id' => Str::random(10),
-            'authorId' => Str::random(10),
+            'author_id' => Str::random(10),
             'title' => Str::random(10),
             'body' => Str::random(100),
             'latitude' => 37.785834,
@@ -70,7 +70,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('posts')->insert([
             'id' => Str::random(10),
-            'authorId' => Str::random(10),
+            'author_id' => Str::random(10),
             'title' => Str::random(10),
             'body' => Str::random(100),
             'latitude' => 37.785834,

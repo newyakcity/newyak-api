@@ -15,7 +15,7 @@ class AddCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->string('id')->unique();
-            $table->string('authorId');
+            $table->string('author_id');
             $table->string('postId');
             $table->text('body');
             $table->timestamps();

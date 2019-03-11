@@ -16,7 +16,7 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'authorId', 'postId', 'body'
+        'id', 'author_id', 'postId', 'body'
     ];
 
     /**
@@ -27,6 +27,11 @@ class Comment extends Model
     protected $hidden = [
 
     ];
+
+    public function getAuthorIdAttribute($value)
+    {
+        return substr($value, 0, 10);
+    }
 
     public function post()
     {
@@ -39,7 +44,7 @@ class Comment extends Model
         $newComment->fill($data);
 
         $newComment['id'] = Uuid::uuid4()->toString();
-        $newComment['authorId'] = Uuid::uuid4()->toString();
+        $newComment['author_id'] = Uuid::uuid4()->toString();
 
         $newComment->save();
 

@@ -15,7 +15,7 @@ class AddPostTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->string('id')->unique();
-            $table->string('authorId');
+            $table->string('author_id');
             $table->string('title');
             $table->text('body');
             $table->decimal('latitude', 11, 7);
