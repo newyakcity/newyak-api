@@ -28,10 +28,12 @@ class Comment extends Model
 
     ];
 
-    public function getAuthorIdAttribute($value)
-    {
-        return substr($value, 0, 10);
-    }
+    /*
+        public function getAuthorIdAttribute($value)
+        {
+            return substr($value, 0, 10);
+        }
+    */
 
     public function post()
     {
