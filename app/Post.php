@@ -67,7 +67,7 @@ class Post extends Model
             ), [$lat, $lng, $lat])
             ->withCount('comments')
             ->with('username')
-            ->orderBy('created_at', 'desc')
+            ->orderByRaw('(.6 * comments_count) + (.4 * TIMESTAMPDIFF(HOUR, CURTIME(), created_at)) DESC')
             ->get();
 
         return $res;
