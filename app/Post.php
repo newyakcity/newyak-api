@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\Carbon;
+use function foo\func;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -39,9 +41,14 @@ class Post extends Model
         }
     */
 
-    public function  comments()
+    public function comments()
     {
         return $this->hasMany('App\Comment', 'postId');
+    }
+
+    public function latestComment()
+    {
+        return $this->hasMany('App\Comment', 'postId')->latest();
     }
 
     public function username()
@@ -49,7 +56,7 @@ class Post extends Model
         return $this->morphOne(Username::class, 'usernameable');
     }
 
-    public function searchPosts(string  $lat, string $lng) {
+    public function searchPosts(string $lat, string $lng) {
 
         $res = $this->whereRaw(
             DB::raw("(
@@ -67,10 +74,36 @@ class Post extends Model
             ), [$lat, $lng, $lat])
             ->withCount('comments')
             ->with('username')
-            ->orderByRaw('(.6 * comments_count) + (.4 * TIMESTAMPDIFF(HOUR, CURTIME(), created_at)) DESC')
+            ->orderByRaw('(.6 * comments_count) + (.4 * TIMESTAMPDIFF(MINUTE, CURTIME(), created_at)) DESC')
             ->get();
 
         return $res;
+    }
+
+    public function cleanupPosts() {
+        $now = Carbon::now();
+
+        $now->subHour();
+
+        // Delete posts older than 30 min w/o comments
+        $this
+        ->where('created_at', '<', Carbon::now()->subMinutes(30)->toDateTimeString())
+        ->doesnthave('comments')
+        ->delete();
+
+        // Delete posts where latest comment was > 30 min ago
+        $withComments = $this
+        ->whereHas('latestComment', function($query) {
+            $fmin = Carbon::now();
+            $fmin->subMinutes(30);
+
+            $query->where('created_at', '<', $fmin->toDateTimeString());
+        })->get();
+
+        foreach ($withComments as $post) {
+            $post->comments()->delete();
+            $post->delete();
+        }
     }
 
     public function createPost(array $data) {
