@@ -3,10 +3,8 @@
 namespace App;
 
 use Carbon\Carbon;
-use function foo\func;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 use Ramsey\Uuid\Uuid;
 
