@@ -18,7 +18,7 @@ class Comment extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'author_id', 'postId', 'body'
+        'id', 'author_id', 'body', 'commentable_id', 'commentable_type'
     ];
 
     /**
@@ -39,7 +39,17 @@ class Comment extends Model
 
     public function post()
     {
-        return $this->belongsTo('App\Post');
+        return $this->morphTo('commentable', 'App\Post', 'id');
+    }
+
+    public function comment()
+    {
+        return $this->morphTo('commentable', 'App\Comment', 'id');
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
     public function username()

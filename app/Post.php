@@ -41,12 +41,12 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany('App\Comment', 'postId');
+        return $this->morphMany('App\Comment', 'commentable');
     }
 
     public function latestComment()
     {
-        return $this->hasMany('App\Comment', 'postId')->latest();
+        return $this->morphMany('App\Comment', 'commentable')->latest();
     }
 
     public function username()

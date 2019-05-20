@@ -21,17 +21,37 @@ $factory->state(\App\Comment::class, 'old', [
     'updated_at' => Carbon::now()->subHours(2)
 ]);
 
+$factory->state(\App\Comment::class, 'withComments', []);
+
 $factory->afterCreatingState(\App\Post::class, 'withComments', function ($post, $faker) {
     $random = rand(1, 59);
 
     factory(\App\Comment::class, $random)->create([
-        'postId' => $post->id
+        'commentable_id' => $post->id,
+        'commentable_type' => \App\Post::class
     ]);
 });
 
 $factory->afterCreatingState(\App\Post::class, 'oldWithComments', function ($post, $faker) {
     $random = rand(1, 59);
     factory(\App\Comment::class, $random)->states('old')->create([
-        'postId' => $post->id
+        'commentable_id' => $post->id,
+        'commentable_type' => \App\Post::class
+    ]);
+});
+
+$factory->afterCreatingState(\App\Post::class, 'withNestedComments', function ($post, $faker) {
+    $random = rand(1, 59);
+    factory(\App\Comment::class, $random)->states('withComments')->create([
+        'commentable_id' => $post->id,
+        'commentable_type' => \App\Post::class
+    ]);
+});
+
+$factory->afterCreatingState(\App\Comment::class, 'withComments', function ($comment, $faker) {
+    $random = rand(1, 59);
+    factory(\App\Comment::class, $random)->create([
+        'commentable_id' => $comment->id,
+        'commentable_type' => \App\Comment::class
     ]);
 });

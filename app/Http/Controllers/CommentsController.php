@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Post;
 use App\Services\UsernameService;
 use App\Username;
 use Illuminate\Http\Request;
@@ -40,6 +41,21 @@ class CommentsController extends Controller
         if($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
+
+        if($data['commentId']) {
+            $data['commentable_type'] = Comment::class;
+            $data['commentable_id'] = $data['commentId'];
+
+            unset($data['commentId']);
+
+        } else {
+            $postId = $data['postId'];
+
+            $data['commentable_type'] = Post::class;
+            $data['commentable_id'] = $postId;
+        }
+
+        unset($data['postId']);
 
         $newPost = $this->comment->createComment($data);
 
