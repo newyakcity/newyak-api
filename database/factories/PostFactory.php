@@ -21,6 +21,8 @@ $factory->define(\App\Post::class, function (Faker $faker) {
 
 $factory->state(\App\Post::class, 'withComments', []);
 
+$factory->state(\App\Post::class, 'withNestedComments', []);
+
 $factory->state(\App\Post::class, 'old', [
     'created_at' => Carbon::now()->subHour(2),
     'updated_at' => Carbon::now()->subHour(2)

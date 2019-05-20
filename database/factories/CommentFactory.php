@@ -40,6 +40,14 @@ $factory->afterCreatingState(\App\Post::class, 'oldWithComments', function ($pos
     ]);
 });
 
+$factory->afterCreatingState(\App\Post::class, 'withNestedComments', function ($post, $faker) {
+    $random = rand(1, 59);
+    factory(\App\Comment::class, $random)->states('withComments')->create([
+        'commentable_id' => $post->id,
+        'commentable_type' => \App\Post::class
+    ]);
+});
+
 $factory->afterCreatingState(\App\Comment::class, 'withComments', function ($comment, $faker) {
     $random = rand(1, 59);
     factory(\App\Comment::class, $random)->create([
