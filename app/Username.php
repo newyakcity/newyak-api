@@ -34,11 +34,11 @@ class Username extends Model
 
     public function comment()
     {
-        return $this->belongsTo('App\Comment', 'author_id', 'author_id');
+        return $this->morphTo('usernameable', 'App\Comment', 'id');
     }
 
     public function post()
     {
-        return $this->belongsTo('App\Post', 'author_id', 'author_id');
+        return $this->morphTo('usernameable', 'App\Post', 'id');
     }
 }
